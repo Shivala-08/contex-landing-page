@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Context Transfer - your context, portable</title>
+<meta name="description" content="Capture AI conversations from anywhere, extract them into a structured, portable card. Runs fully local with Ollama. Free, open source, macOS.">
+<!-- [IMAGE SLOT: /website/images/card-example.png - real screenshot of an extracted context card; when added, replace the built-in card demo or link it below it, and write alt text describing your real capture] -->
+<!-- [IMAGE SLOT: /website/images/capture-demo.gif - Phase 2 floating-panel capture flow, once built] -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- background layers -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+<canvas id="constellation" aria-hidden="true"></canvas>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <a class="topbar-brand" href="#top">&gt;_ context<span class="accent">-transfer</span></a>
+  <nav class="topbar-nav" aria-label="Primary">
+    <a href="#problem">problem</a>
+    <a href="#how">how</a>
+    <a href="#local-first">local</a>
+    <a href="#card">card</a>
+    <a href="#backends">backends</a>
+    <a href="#install">install</a>
+  </nav>
+  <a class="btn btn-primary btn-sm" href="https://github.com/Shivala-08/context-shifter/releases" target="_blank" rel="noopener">download for mac</a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="hero-eyebrow"><span class="accent">$</span> pbpaste | context-transfer --extract</p>
+      <h1 class="hero-headline">
+        Your context shouldn't<br>
+        <span class="typed" data-typed='["live and die in one chat window.","get stuck inside ChatGPT.","evaporate when you switch apps.","start over in every new tab."]'>live and die in one chat window.</span><span class="caret" aria-hidden="true"></span>
+      </h1>
+      <p class="hero-sub">Select text anywhere, hit a shortcut, get a structured card that works in any AI tool. Runs fully local.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://github.com/Shivala-08/context-shifter/releases" target="_blank" rel="noopener">download for mac</a>
+        <a class="btn btn-ghost" href="https://github.com/Shivala-08/context-shifter" target="_blank" rel="noopener">view on github</a>
+      </div>
+    </div>
+    <div class="hero-demo">
+      <div class="terminal" id="hero-terminal" title="click to replay">
+        <div class="terminal-head">
+          <span class="tdot tdot-red"></span><span class="tdot tdot-yellow"></span><span class="tdot tdot-green"></span>
+          <span class="terminal-title">context-transfer --capture</span>
+        </div>
+        <div class="terminal-body">
+<pre class="t-pre" id="t-pre-0"><span class="t-prompt">$</span> <span class="t-cmd" data-copy-cmd="pbpaste | context-transfer --extract">pbpaste | context-transfer --extract</span>
+<span class="t-dim">// 3,847 chars of raw chat, pasted in</span>
+<span class="t-dim">me: ok so the migration is blocked until</span>
+<span class="t-dim">the mobile team signs off on refresh...</span></pre>
+<pre class="t-pre" id="t-pre-1"><span class="t-ok">&check; extracted in 0.8s &middot; ollama &middot; 0 network calls</span></pre>
+<pre class="t-pre" id="t-pre-2"><span class="t-card">┌ CONTEXT CARD ────────────────────────┐</span>
+<span class="t-card-k">Goal</span>          <span class="t-card-v">ship JWT migration without breaking mobile</span>
+<span class="t-card-k">Decisions</span>     <span class="t-card-v">httpOnly refresh, 15min access tokens</span>
+<span class="t-card-k">State</span>         <span class="t-card-v">middleware passing tests, PR #142 open</span>
+<span class="t-card-k">Open</span>          <span class="t-card-v">device-bound refresh tokens?</span>
+<span class="t-card">└────────────────────────── <span class="t-ok">copied &check;</span> ───┘</span></pre>
+        </div>
+      </div>
+      <div class="hero-demo-foot">
+        <span class="hero-demo-caption">capture pressed anywhere &rarr; structured card, in about a second</span>
+        <span class="replay-hint">press <kbd>E</kbd> to replay</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="main">
+
+<!-- ============ THE PROBLEM ============ -->
+<section class="section" id="problem">
+  <div class="wrap">
+    <p class="kicker"># the problem</p>
+    <h2 class="headline scramble" data-scramble>Your context is trapped.</h2>
+    <p class="lede reveal">Every AI tool keeps its context in its own silo. Start a thread in one app, move to another, and you're re-explaining your project, your constraints, and your decisions from scratch.</p>
+    <p class="lede reveal" style="--d:.08s">The context wasn't lost. It just can't leave.</p>
+    <div class="silo-stack reveal" style="--d:.16s" aria-label="Each AI app keeps its own context, isolated from the others">
+      <div class="silo-row" style="--d:0s"><code>ChatGPT</code><span class="silo-lock">context locked in session</span></div>
+      <div class="silo-row" style="--d:.5s"><code>Claude</code><span class="silo-lock">context locked in session</span></div>
+      <div class="silo-row" style="--d:1s"><code>local llama</code><span class="silo-lock">context locked in session</span></div>
+      <div class="silo-arrow" aria-hidden="true"></div>
+      <div class="silo-row silo-row-new"><code>new chat, same you</code><span class="silo-lock silo-lock-bad">context: 0 tokens</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section section-how" id="how">
+  <div class="wrap">
+    <h2 class="headline scramble" data-scramble>Three moves. No dashboard.</h2>
+    <ol class="steps">
+      <li class="step step-1 reveal">
+        <div class="step-copy">
+          <span class="step-num" aria-hidden="true">1</span>
+          <h3>Select text anywhere</h3>
+          <p>Highlight a conversation in any app, or paste a raw transcript straight into the panel. If you can select it, you can capture it.</p>
+        </div>
+        <div class="step-visual">
+          <div class="sel-window">
+            <div class="sel-window-head">anything with selectable text</div>
+            <div class="sel-lines" aria-hidden="true">
+              <span class="sel-line" style="--w:82%"></span>
+              <span class="sel-line is-selected" style="--w:64%"></span>
+              <span class="sel-line" style="--w:74%"></span>
+              <span class="sel-line is-selected" style="--w:38%"></span>
+            </div>
+            <div class="sel-foot"><kbd>&#8984;&#8679;E</kbd> works system-wide on macOS</div>
+          </div>
+        </div>
+      </li>
+      <li class="step step-2 reveal">
+        <div class="step-copy">
+          <span class="step-num" aria-hidden="true">2</span>
+          <h3>Hit extract</h3>
+          <p>One shortcut or one button. A local model reads the mess and pulls out what actually matters.</p>
+        </div>
+        <div class="step-visual">
+          <div class="extract-panel">
+            <div class="extract-panel-head">Context Transfer</div>
+            <div class="extract-progress" aria-hidden="true"><span class="extract-progress-fill"></span></div>
+            <div class="extract-status"><span class="t-ok">&check;</span> extracting via llama3.1:8b</div>
+          </div>
+        </div>
+      </li>
+      <li class="step step-3 reveal">
+        <div class="step-copy">
+          <span class="step-num" aria-hidden="true">3</span>
+          <h3>Copy the card</h3>
+          <p>Goal, decisions, constraints, current state. One Copy button and the context travels with you.</p>
+        </div>
+        <div class="step-visual">
+          <div class="card-mini" aria-hidden="true">
+            <div class="card-mini-head"><span>Goal</span><span class="card-mini-copy">copy</span></div>
+            <div class="card-mini-lines"><span style="--w:88%"></span><span style="--w:72%"></span><span style="--w:55%"></span></div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ LOCAL-FIRST ============ -->
+<section class="section section-local" id="local-first">
+  <div class="wrap local-layout">
+    <div class="local-copy">
+      <p class="kicker"># local-first, by default</p>
+      <h2 class="headline scramble" data-scramble>Nothing leaves the machine.</h2>
+      <p class="lede">Point it at Ollama and extraction runs on your own hardware. No API key, no cloud call, no telemetry. This is not another wrapper around someone's API.</p>
+      <ul class="local-list">
+        <li>No API key required</li>
+        <li>No network calls on the extraction path</li>
+        <li>No telemetry, no accounts, no cloud</li>
+        <li>Open source, MIT licensed</li>
+      </ul>
+      <div class="offline-demo">
+        <span class="offline-label" id="offline-label">wifi: <b>connected</b></span>
+        <button class="offline-btn" id="offline-btn" type="button">toggle it off</button>
+        <span class="offline-chip" id="offline-chip" hidden>still works</span>
+      </div>
+    </div>
+    <div class="local-visual reveal">
+      <div class="terminal terminal-tall">
+        <div class="terminal-head">
+          <span class="tdot tdot-red"></span><span class="tdot tdot-yellow"></span><span class="tdot tdot-green"></span>
+          <span class="terminal-title">ollama ps</span>
+        </div>
+        <pre class="t-pre t-pre-static"><span class="t-prompt">$</span> <span class="t-cmd" data-copy-cmd="ollama ps">ollama ps</span>
+<span class="t-dim">NAME           ID         SIZE     PROCESSOR</span>
+llama3.1:8b    4f3a9d2e   5.2 GB   100% GPU
+
+<span class="t-prompt">$</span> context-transfer --capture
+<span class="t-dim">&ldquo;extract the decisions and constraints...&rdquo;</span>
+
+<span class="t-ok">&check; extraction complete in 0.8s</span>
+<span class="t-ok">&check; 0 network requests made</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE CARD ============ -->
+<section class="section section-card" id="card">
+  <div class="wrap">
+    <p class="kicker"># what gets extracted</p>
+    <h2 class="headline scramble" data-scramble>One card, carried anywhere.</h2>
+    <p class="section-lede reveal">A messy 4,000-token conversation goes in. This comes out. Copy it into any chat, any tool, any model.</p>
+    <div class="extract-card reveal" id="extract-card" style="--d:.1s">
+      <div class="ec-head">
+        <span class="ec-title">Context Card</span>
+        <span class="ec-copied" id="ec-copied" role="status">&check; copied</span>
+        <button class="ec-copy" id="ec-copy" type="button">copy</button>
+      </div>
+      <div class="ec-body">
+        <div class="ec-sec">
+          <h4 class="ec-k">Captured on</h4>
+          <p class="ec-v">Sep 14, 2026, 11:42 PM</p>
+        </div>
+        <div class="ec-sec">
+          <h4 class="ec-k">Goal</h4>
+          <p class="ec-v">Migrate the auth service from session cookies to short-lived JWTs without breaking the mobile clients.</p>
+        </div>
+        <div class="ec-sec">
+          <h4 class="ec-k">Key Decisions</h4>
+          <ul class="ec-list">
+            <li>Refresh tokens live in httpOnly cookies</li>
+            <li>15-minute access tokens</li>
+            <li>Skip token rotation for v1</li>
+          </ul>
+        </div>
+        <div class="ec-sec">
+          <h4 class="ec-k">Constraints &amp; Preferences</h4>
+          <ul class="ec-list">
+            <li>iOS client ships weekly; no breaking API changes before Oct 1</li>
+            <li>Prefer boring, well-documented libraries</li>
+          </ul>
+        </div>
+        <div class="ec-sec">
+          <h4 class="ec-k">Current State</h4>
+          <p class="ec-v">Middleware rewritten and passing tests; the mobile team is reviewing the token refresh PR.</p>
+        </div>
+        <div class="ec-sec">
+          <h4 class="ec-k">Resources &amp; Links</h4>
+          <ul class="ec-list">
+            <li>PR #142: token refresh flow</li>
+            <li>ADR-019: sessions to JWT</li>
+          </ul>
+        </div>
+        <div class="ec-sec">
+          <h4 class="ec-k">Open Questions</h4>
+          <ul class="ec-list">
+            <li>Do we need device-bound refresh tokens?</li>
+            <li>Who owns the logout-everywhere endpoint?</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ec-note">Real output, real format. The Copy button on your extracted cards works exactly like this one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BACKENDS ============ -->
+<section class="section section-backends" id="backends">
+  <div class="wrap">
+    <p class="kicker"># bring your own model</p>
+    <h2 class="headline scramble" data-scramble>Local by default, cloud when you want it.</h2>
+    <div class="backend-toggle" role="tablist" aria-label="Extraction backend">
+      <button class="bt-btn is-active" id="bt-local" role="tab" aria-selected="true" aria-controls="backend-panel" type="button">
+        <span class="bt-dot bt-dot-local" aria-hidden="true"></span>ollama, local
+      </button>
+      <button class="bt-btn" id="bt-cloud" role="tab" aria-selected="false" aria-controls="backend-panel" type="button">
+        <span class="bt-dot bt-dot-cloud" aria-hidden="true"></span>anthropic / nvidia nim
+      </button>
+    </div>
+    <div class="backend-panel reveal" id="backend-panel" role="tabpanel">
+      <pre class="backend-cmd t-pre t-pre-static" id="backend-cmd"><span class="t-prompt">$</span> context-transfer <span class="t-key">--backend ollama</span></pre>
+      <p class="backend-desc" id="backend-desc">Runs on your machine via Ollama. Private by default, works offline, and the card format is identical regardless of model.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTALL ============ -->
+<section class="section section-install" id="install">
+  <div class="wrap">
+    <div class="install-grid">
+      <div class="install-cta">
+        <h2 class="headline">Start carrying your context.</h2>
+        <p class="lede">Free, open source, MIT licensed. Grab a build, or compile it yourself in two minutes.</p>
+        <div class="install-actions">
+          <a class="btn btn-primary" href="https://github.com/Shivala-08/context-shifter/releases" target="_blank" rel="noopener">download for mac</a>
+          <a class="btn btn-ghost" href="https://github.com/Shivala-08/context-shifter" target="_blank" rel="noopener">view on github</a>
+        </div>
+        <p class="install-note">Signed, notarized .dmg lands with the first tagged release. Until then, build from source on the right.</p>
+      </div>
+      <div class="install-side reveal">
+        <div class="terminal">
+          <div class="terminal-head">
+            <span class="tdot tdot-red"></span><span class="tdot tdot-yellow"></span><span class="tdot tdot-green"></span>
+            <span class="terminal-title">zsh</span>
+          </div>
+          <pre class="t-pre t-pre-static"><span class="t-prompt">$</span> <span class="t-cmd" data-copy-cmd="git clone https://github.com/Shivala-08/context-shifter.git" title="click to copy">git clone https://github.com/Shivala-08/context-shifter.git</span>
+<span class="t-prompt">$</span> <span class="t-cmd" data-copy-cmd="cd context-transfer && open ContextTransfer.xcodeproj" title="click to copy">cd context-transfer &amp;&amp; open ContextTransfer.xcodeproj</span>
+<span class="t-prompt">$</span> <span class="t-cmd" data-copy-cmd="xcodebuild -scheme ContextTransfer -configuration Release build" title="click to copy">xcodebuild -scheme ContextTransfer -configuration Release build</span>
+<span class="t-ok">&check; build succeeded &middot; run the app, press &#8984;&#8679;E</span></pre>
+        </div>
+      </div>
+    </div>
+    <div class="install-meta">
+      <a class="meta-link" href="https://github.com/Shivala-08/context-shifter" target="_blank" rel="noopener">github.com/Shivala-08/context-shifter</a>
+      <span class="meta-sep" aria-hidden="true">/</span>
+      <span class="meta-item">macOS 14+</span>
+      <span class="meta-sep" aria-hidden="true">/</span>
+      <span class="meta-item">Ollama for local extraction</span>
+      <span class="meta-sep" aria-hidden="true">/</span>
+      <span class="meta-item">tip: press <kbd>&#8984;K</kbd> anywhere on this page</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span class="footer-item">MIT licensed</span>
+    <span class="footer-sep" aria-hidden="true">/</span>
+    <a class="footer-item" href="https://github.com/Shivala-08" target="_blank" rel="noopener">github.com/Shivala-08</a>
+  </div>
+</footer>
+
+<!-- ============ COMMAND PALETTE ============ -->
+<div class="palette-overlay" id="palette-overlay" aria-hidden="true">
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="palette-head">
+      <span class="palette-prompt" aria-hidden="true">&gt;</span>
+      <input class="palette-input" id="palette-input" type="text" placeholder="jump to a section, run a command..." aria-label="Search sections and commands" autocomplete="off" spellcheck="false">
+      <kbd class="palette-hint">esc</kbd>
+    </div>
+    <ul class="palette-list" id="palette-list" role="listbox" aria-label="Results"></ul>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/terminal-demo.js" defer></script>
+</body>
+</html>

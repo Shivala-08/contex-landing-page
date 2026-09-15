@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+DerivedData/
+build/
+*.xcarchive
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods (if ever used)
+Pods/
+
+# Local config / secrets — never commit these
+.env
+.env.*
+*.local
+secrets.plist
+Config.xcconfig
+
+# Node (tooling scratch)
+node_modules/
