@@ -740,6 +740,27 @@
     });
   }
 
+  /* ---------- faq copyable card examples ---------- */
+
+  function initFaqCards() {
+    document.querySelectorAll("[data-faq-card]").forEach((card) => {
+      card.addEventListener("click", async () => {
+        const lines = [...card.querySelectorAll(".fc-row")].map((row) => {
+          const k = row.querySelector(".t-card-k")?.textContent.trim() || "";
+          const v = row.querySelector(".t-card-v")?.textContent.trim() || "";
+          return k + ": " + v;
+        });
+        const md = "# Context Card\n\n" + lines.join("\n");
+        const ok = await copyText(md);
+        toast(ok ? "context card copied as <b>markdown</b>" : "copy failed, select it manually");
+        if (ok) {
+          card.classList.add("is-copied");
+          setTimeout(() => card.classList.remove("is-copied"), 2200);
+        }
+      });
+    });
+  }
+
   /* ---------- boot ---------- */
 
   initTyped();
@@ -747,6 +768,7 @@
   initOffline();
   initBackend();
   initFaqAccordion();
+  initFaqCards();
   initCardCopy();
   initHeroTerminal();
   initConstellation();
