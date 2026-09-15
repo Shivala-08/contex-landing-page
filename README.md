@@ -2,10 +2,13 @@
 
 > Capture AI conversations from **ChatGPT, Claude, or any app** — extract them into a structured, portable **context card**. Runs **100% locally** via Ollama. No API key. No telemetry. Free & open source.
 
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-macOS%2014%2B-black)
-![Backend](https://img.shields.io/badge/extraction-Ollama%20%7C%20local-ff3d9a)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%2014%2B-black)](https://context-transfer.vercel.app)
+[![Backend](https://img.shields.io/badge/extraction-Ollama%20%7C%20local-ff3d9a)](https://context-transfer.vercel.app)
+[![Live Demo](https://img.shields.io/badge/live%20demo-context--transfer.vercel.app-black?logo=vercel)](https://context-transfer.vercel.app)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
+
+**[🌐 Try it live → context-transfer.vercel.app](https://context-transfer.vercel.app)**
 
 Your context shouldn't live and die inside one chat window. Context Transfer is a macOS utility that turns a messy conversation — from ChatGPT, Claude, a local model, anywhere you can select text — into a structured card you can paste into any other tool:
 
