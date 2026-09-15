@@ -3,10 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Context Transfer - your context, portable</title>
-<meta name="description" content="Capture AI conversations from anywhere, extract them into a structured, portable card. Runs fully local with Ollama. Free, open source, macOS.">
+<title>Context Transfer — Portable AI Context Cards for macOS (Free & Open Source)</title>
+<meta name="description" content="Capture AI conversations from ChatGPT, Claude, or any app. Context Transfer extracts them into a structured, portable context card you can paste into any AI tool. Runs 100% local via Ollama — no API key, no telemetry. Free, open source, macOS.">
 <!-- [IMAGE SLOT: /website/images/card-example.png - real screenshot of an extracted context card; when added, replace the built-in card demo or link it below it, and write alt text describing your real capture] -->
 <!-- [IMAGE SLOT: /website/images/capture-demo.gif - Phase 2 floating-panel capture flow, once built] -->
+<link rel="canonical" href="https://context-transfer.vercel.app/">
+<meta name="keywords" content="AI context, context transfer, ChatGPT context, Claude context, prompt portability, Ollama, local AI, macOS utility, context card, AI workflow, open source, LLM tools">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Shivala-08">
+<meta name="theme-color" content="#0a0a12">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Context Transfer">
+<meta property="og:url" content="https://context-transfer.vercel.app/">
+<meta property="og:title" content="Context Transfer — Your AI context, portable">
+<meta property="og:description" content="Select text anywhere, hit a shortcut, get a structured context card that works in any AI tool. Runs fully local via Ollama. Free & open source for macOS.">
+<meta property="og:image" content="https://context-transfer.vercel.app/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Context Transfer: a messy chat becomes a structured context card — Goal, Decisions, Constraints, State — extracted locally via Ollama">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://context-transfer.vercel.app/">
+<meta name="twitter:title" content="Context Transfer — Your AI context, portable">
+<meta name="twitter:description" content="Capture AI conversations from anywhere. Structured context cards, extracted 100% locally via Ollama. Free & open source for macOS.">
+<meta name="twitter:image" content="https://context-transfer.vercel.app/images/og-image.png">
+<meta name="twitter:image:alt" content="Context Transfer: a messy chat becomes a structured context card, extracted locally">
+
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://context-transfer.vercel.app/#website",
+      "url": "https://context-transfer.vercel.app/",
+      "name": "Context Transfer",
+      "description": "Capture AI conversations from anywhere. Extract them into a structured, portable card. Runs fully local.",
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://context-transfer.vercel.app/#app",
+      "name": "Context Transfer",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "macOS 14+",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "macOS utility that turns AI conversations from ChatGPT, Claude, or any app into a structured, portable context card. Extraction runs 100% locally via Ollama — no API key, no telemetry.",
+      "featureList": "Capture text from any app, structured context card extraction, local-first via Ollama, optional cloud backends, no telemetry",
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://context-transfer.vercel.app/",
+      "sameAs": ["https://github.com/Shivala-08/context-shifter"]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://context-transfer.vercel.app/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Context Transfer work with ChatGPT and Claude?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It captures selected text from any app — ChatGPT, Claude, a local model, anything — and turns it into one structured card you can paste into any other tool." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my conversation data sent to a server?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Extraction runs locally through Ollama on your machine. There are no network calls on the local path, no API key, and no telemetry." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Context Transfer cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It's free and open source under the MIT license." }
+        },
+        {
+          "@type": "Question",
+          "name": "What macOS version is required?",
+          "acceptedAnswer": { "@type": "Answer", "text": "macOS 14 or later. Local extraction requires Ollama and a pulled model such as llama3.1:8b." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">

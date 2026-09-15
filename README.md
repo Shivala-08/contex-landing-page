@@ -1,6 +1,11 @@
 # Context Transfer
 
-> Capture AI conversations from anywhere. Extract them into a structured, portable card. Runs fully local.
+> Capture AI conversations from **ChatGPT, Claude, or any app** — extract them into a structured, portable **context card**. Runs **100% locally** via Ollama. No API key. No telemetry. Free & open source.
+
+![License](https://img.shields.io/badge/license-MIT-green)
+![Platform](https://img.shields.io/badge/platform-macOS%2014%2B-black)
+![Backend](https://img.shields.io/badge/extraction-Ollama%20%7C%20local-ff3d9a)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 
 Your context shouldn't live and die inside one chat window. Context Transfer is a macOS utility that turns a messy conversation — from ChatGPT, Claude, a local model, anywhere you can select text — into a structured card you can paste into any other tool:
 
@@ -14,6 +19,10 @@ Your context shouldn't live and die inside one chat window. Context Transfer is 
 <!-- TODO: replace with a real GIF/screenshot of the extraction flow, above the fold
 ![Capture flow: select text, press ⌘⇧E, get a structured context card](docs/images/capture-demo.gif)
 -->
+
+## Works with
+
+ChatGPT · Claude · Gemini · local Llama / Mistral / DeepSeek via Ollama · Cursor · Warp · Notes · Mail — **any app where you can select text.** The card you get back pastes into any AI tool, IDE, or doc.
 
 ## Features
 
@@ -51,7 +60,7 @@ That's it — no API key. A prebuilt, signed `.dmg` will land with the first tag
 2. **Hit extract** — one shortcut; a local model reads the mess and pulls out what matters
 3. **Copy the card** — one Copy button and your context travels with you
 
-See the [landing page](https://shivala-08.github.io/context-shifter/) for the full walkthrough.
+See the [landing page](https://context-transfer.vercel.app) for the full walkthrough.
 
 ## Backends
 
@@ -61,6 +70,32 @@ See the [landing page](https://shivala-08.github.io/context-shifter/) for the fu
 | Anthropic / NVIDIA NIM | cloud | opt-in per run, never a silent default |
 
 The card format is identical regardless of backend.
+
+## FAQ
+
+<details>
+<summary><b>Does it work with ChatGPT and Claude?</b></summary>
+
+Yes — with any app that has selectable text. Context Transfer reads what you highlight and turns it into one structured card, so your prompt context moves between tools with you.
+</details>
+
+<details>
+<summary><b>Is my conversation data sent anywhere?</b></summary>
+
+No. With the default Ollama backend, extraction runs entirely on your machine — zero network calls on the local path, no API key, no telemetry.
+</details>
+
+<details>
+<summary><b>Why not just copy-paste the whole chat?</b></summary>
+
+A raw transcript is noisy: introductions, wrong turns, tangents. The card distills a 4,000-token conversation into its goal, decisions, constraints, and open questions — smaller, faster to re-ingest, and consistent across models.
+</details>
+
+<details>
+<summary><b>What does it cost?</b></summary>
+
+Nothing. MIT-licensed open source, and local extraction is free forever through Ollama.
+</details>
 
 ## Contributing
 

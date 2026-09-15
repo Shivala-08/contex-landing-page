@@ -24,8 +24,8 @@
 Keep this in a `/website` folder inside the same repo (see open-source guide) rather than a separate repo — simpler to keep in sync with the app's actual feature set as it evolves.
 
 ## 4. Hosting & deployment
-- **GitHub Pages**, deployed from the `/website` folder (or a `gh-pages` branch via a small GitHub Action) — free, and it keeps the whole project (app + landing page) under one roof, which reads well for an open-source project. Vercel is an equally fine alternative if you'd rather reuse your existing Vercel setup from the portfolio site.
-- Custom domain optional — a `username.github.io/context-transfer` URL is completely fine for a project at this stage; don't spend time on a domain purchase before the tool has real users.
+- **Vercel** (chosen) — the `/website` folder is deployed with the Vercel CLI (`vercel link` + `vercel deploy --prod` from `website/`), live at https://context-transfer.vercel.app. GitHub Pages was the original candidate and kept everything under one roof, but Vercel deploys need no workflow file.
+- Custom domain optional — the `context-transfer.vercel.app` URL is completely fine for a project at this stage; don't spend time on a domain purchase before the tool has real users.
 
 ## 5. Analytics
 - If you want visit data at all, use a privacy-respecting, cookie-less option (Plausible, or GitHub's own repo traffic tab under Insights, which needs zero extra code). Do not add Google Analytics or anything cookie-based — putting invasive tracking on the landing page for a tool whose whole pitch is "your data doesn't have to leave your machine" undercuts the message the moment someone checks the page source or network tab.
@@ -37,4 +37,4 @@ Keep this in a `/website` folder inside the same repo (see open-source guide) ra
 - Respect `prefers-reduced-motion` for the typed-text hero animation — show the finished text immediately for users who've set that preference, rather than forcing the animation on everyone.
 
 ## 7. Build/CI
-- A single GitHub Action that deploys `/website` to Pages on push to `main` is enough — no test suite needed for a static page. Don't over-engineer CI for a project this size.
+- No deploy CI: the site ships via the Vercel CLI (`vercel deploy --prod` from `website/`). No test suite needed for a static page. Don't over-engineer CI for a project this size.
