@@ -37,6 +37,16 @@ ChatGPT · Claude · Gemini · local Llama / Mistral / DeepSeek via Ollama · Cu
 
 ## Quickstart
 
+### Download
+
+Grab the [`.dmg` from Releases](https://github.com/Shivala-08/context-shifter/releases/latest), drag **Context Transfer** to Applications, and launch.
+
+> **First launch:** the build is ad-hoc signed (no Apple notarization), so Gatekeeper warns once. Right-click the app → **Open** → **Open**, or run:
+>
+> ```bash
+> xattr -cr "/Applications/Context Transfer.app"
+> ```
+
 ### Build from source
 
 ```bash
@@ -55,7 +65,7 @@ Install [Ollama](https://ollama.com), then pull a model:
 ollama pull llama3.1:8b
 ```
 
-That's it — no API key. A prebuilt, signed `.dmg` will land with the first tagged release (see [Releases](https://github.com/Shivala-08/context-shifter/releases)).
+That's it — no API key. If you haven't installed the app yet, grab the [`.dmg` from Releases](https://github.com/Shivala-08/context-shifter/releases/latest).
 
 ## How it works
 
