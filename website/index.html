@@ -116,6 +116,7 @@
     <a href="#local-first">local</a>
     <a href="#card">card</a>
     <a href="#backends">backends</a>
+    <a href="#faq">faq</a>
     <a href="#install">install</a>
   </nav>
   <a class="btn btn-primary btn-sm" href="https://github.com/Shivala-08/context-shifter/releases" target="_blank" rel="noopener">download for mac</a>
@@ -354,6 +355,62 @@ llama3.1:8b    4f3a9d2e   5.2 GB   100% GPU
       <pre class="backend-cmd t-pre t-pre-static" id="backend-cmd"><span class="t-prompt">$</span> context-transfer <span class="t-key">--backend ollama</span></pre>
       <p class="backend-desc" id="backend-desc">Runs on your machine via Ollama. Private by default, works offline, and the card format is identical regardless of model.</p>
     </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section-faq" id="faq">
+  <div class="wrap">
+    <p class="kicker"># faq</p>
+    <h2 class="headline scramble" data-scramble>Questions, answered.</h2>
+    <div class="faq-list reveal" style="--d:.1s">
+      <details class="faq-item" name="faq" open>
+        <summary>
+          <span class="faq-q">Does Context Transfer work with ChatGPT and Claude?</span>
+          <span class="faq-plus" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-a">
+          <p>Yes — with any app that has selectable text. Highlight a conversation in ChatGPT, Claude, Gemini, a local model, anything. Context Transfer distills it into one structured card that pastes cleanly into any AI tool, IDE, or doc.</p>
+        </div>
+      </details>
+      <details class="faq-item" name="faq">
+        <summary>
+          <span class="faq-q">Is my conversation data sent to a server?</span>
+          <span class="faq-plus" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-a">
+          <p>No. With the default Ollama backend, extraction runs entirely on your machine — no API key, no accounts, no telemetry, zero network calls on the extraction path. A cloud backend (Anthropic, NVIDIA NIM) is available, but only when you explicitly select it.</p>
+        </div>
+      </details>
+      <details class="faq-item" name="faq">
+        <summary>
+          <span class="faq-q">Why not just copy-paste the whole chat?</span>
+          <span class="faq-plus" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-a">
+          <p>A raw transcript is noisy: introductions, wrong turns, tangents. The card distills a 4,000-token conversation into its goal, decisions, constraints, and open questions — smaller, faster to re-ingest, and consistent across models.</p>
+        </div>
+      </details>
+      <details class="faq-item" name="faq">
+        <summary>
+          <span class="faq-q">What does it cost?</span>
+          <span class="faq-plus" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-a">
+          <p>Nothing. Context Transfer is MIT-licensed open source, and local extraction through Ollama is free forever — your hardware, your model, your data.</p>
+        </div>
+      </details>
+      <details class="faq-item" name="faq">
+        <summary>
+          <span class="faq-q">What macOS version is required?</span>
+          <span class="faq-plus" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-a">
+          <p>macOS 14 or later, plus <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> with a pulled model such as <code>llama3.1:8b</code> for local extraction. To build from source you'll also need Xcode 15+.</p>
+        </div>
+      </details>
+    </div>
+    <p class="faq-more reveal" style="--d:.2s">More questions? <a href="https://github.com/Shivala-08/context-shifter/issues" target="_blank" rel="noopener">open an issue</a> or read the <a href="https://github.com/Shivala-08/context-shifter#readme" target="_blank" rel="noopener">README</a>.</p>
   </div>
 </section>
 

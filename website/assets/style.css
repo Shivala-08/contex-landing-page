@@ -709,6 +709,106 @@ kbd {
 }
 .backend-desc { color: var(--text-dim); max-width: 62ch; }
 
+/* ---------- faq ---------- */
+
+.section-faq .headline { max-width: none; }
+
+.faq-list {
+  max-width: 780px;
+  margin-top: 38px;
+  border-top: 1px solid var(--line);
+}
+
+.faq-item { border-bottom: 1px solid var(--line); }
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 4px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.faq-q {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  transition: color 0.2s;
+}
+.faq-item summary:hover .faq-q { color: var(--cyan); }
+
+.faq-plus {
+  position: relative;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+}
+.faq-plus::before,
+.faq-plus::after {
+  content: "";
+  position: absolute;
+  background: var(--text-dim);
+  transition: transform 0.25s var(--ease-out), background 0.25s;
+}
+.faq-plus::before { left: 8px; right: 8px; top: 50%; height: 1.5px; margin-top: -0.75px; }
+.faq-plus::after { top: 8px; bottom: 8px; left: 50%; width: 1.5px; margin-left: -0.75px; }
+
+.faq-item[open] .faq-plus { border-color: rgba(255, 61, 154, 0.5); }
+.faq-item[open] .faq-plus::before {
+  background: var(--mag);
+  transform: rotate(90deg);
+}
+.faq-item[open] .faq-plus::after { transform: scaleY(0); }
+
+.faq-a {
+  padding: 0 44px 22px 4px;
+  color: var(--text-dim);
+  font-size: 14.5px;
+  line-height: 1.65;
+  max-width: 64ch;
+}
+.faq-a p + p { margin-top: 10px; }
+.faq-a a {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(47, 214, 232, 0.35);
+}
+.faq-a a:hover { color: var(--text); border-color: var(--text); }
+.faq-a code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--text);
+}
+
+.faq-more {
+  margin-top: 26px;
+  font-size: 13px;
+  color: var(--text-faint);
+}
+.faq-more a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(47, 214, 232, 0.35); }
+.faq-more a:hover { color: var(--text); border-color: var(--text); }
+
+@media (max-width: 640px) {
+  .faq-a { padding-right: 8px; }
+}
+
 /* ---------- install ---------- */
 
 .section-install { text-align: center; }

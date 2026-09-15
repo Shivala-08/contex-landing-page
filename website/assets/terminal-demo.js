@@ -564,6 +564,7 @@
     { group: "sections", label: "local-first", hint: "jump", target: "#local-first" },
     { group: "sections", label: "the card", hint: "jump", target: "#card" },
     { group: "sections", label: "backends", hint: "jump", target: "#backends" },
+    { group: "sections", label: "faq", hint: "jump", target: "#faq" },
     { group: "sections", label: "install", hint: "jump", target: "#install" },
     {
       group: "commands",
@@ -714,12 +715,38 @@
     });
   }
 
+  /* ---------- faq accordion ---------- */
+
+  function initFaqAccordion() {
+    const items = document.querySelectorAll(".faq-item");
+    if (!items.length || prefersReduced) return; // <details> still works, just without animation
+
+    items.forEach((item) => {
+      item.addEventListener("toggle", () => {
+        if (!item.open) return;
+        const a = item.querySelector(".faq-a");
+        if (!a || typeof a.animate !== "function") return;
+        a.style.overflow = "hidden";
+        a.animate(
+          [
+            { height: "0px", opacity: "0" },
+            { height: a.scrollHeight + "px", opacity: "1" }
+          ],
+          { duration: 260, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+        ).onfinish = () => {
+          a.style.overflow = "";
+        };
+      });
+    });
+  }
+
   /* ---------- boot ---------- */
 
   initTyped();
   initScramble();
   initOffline();
   initBackend();
+  initFaqAccordion();
   initCardCopy();
   initHeroTerminal();
   initConstellation();
