@@ -19,10 +19,6 @@ Your context shouldn't live and die inside one chat window. Context Transfer is 
 - **Resources & Links**
 - **Open Questions**
 
-<!-- TODO: replace with a real GIF/screenshot of the extraction flow, above the fold
-![Capture flow: select text, press ⌘⇧E, get a structured context card](docs/images/capture-demo.gif)
--->
-
 ## Works with
 
 ChatGPT · Claude · Gemini · local Llama / Mistral / DeepSeek via Ollama · Cursor · Warp · Notes · Mail — **any app where you can select text.** The card you get back pastes into any AI tool, IDE, or doc.
